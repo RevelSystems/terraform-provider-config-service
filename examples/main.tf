@@ -9,14 +9,14 @@ terraform {
 
 provider "config-service" {
   token     = "<token_value>"
-  base_url  = "http://configs.dev.revelup.com/v1/clients"
+  base_url  = "<base_url>"
 }
 
 resource "configuration" "webhook_service_configuration" {
   provider = config-service
   client = "webhook-service-test7"
   attributes_json = jsonencode({
-    url         = "https://webhook-service.dev.revelup.io/",
+    url         = "https://google.com",
     some_flag   = false,
     some_number = 123,
     more        = null
