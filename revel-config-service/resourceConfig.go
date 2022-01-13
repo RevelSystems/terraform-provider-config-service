@@ -46,13 +46,14 @@ func resourceConfig() *schema.Resource {
 
 func resourceConfigCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	client := &http.Client{Timeout: 10 * time.Second}
-	clientName := d.Get("client").(string)
 
 	config, ok := m.(Ctx)
 	if !ok {
 		return diag.FromErr(fmt.Errorf("can't read config"))
 	}
+
+	client := &http.Client{Timeout: time.Duration(config.Timeout) * time.Second}
+	clientName := d.Get("client").(string)
 
 	attributes_json := d.Get("attributes_json").(string)
 	var new_json map[string]interface{}
@@ -92,13 +93,14 @@ func resourceConfigRead(ctx context.Context, d *schema.ResourceData, m interface
 
 func resourceConfigUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	client := &http.Client{Timeout: 10 * time.Second}
-	clientName := d.Id()
 
 	config, ok := m.(Ctx)
 	if !ok {
 		return diag.FromErr(fmt.Errorf("can't read config"))
 	}
+
+	client := &http.Client{Timeout: time.Duration(config.Timeout) * time.Second}
+	clientName := d.Id()
 
 	attributes_json := d.Get("attributes_json").(string)
 	var new_json map[string]interface{}
@@ -135,13 +137,14 @@ func resourceConfigUpdate(ctx context.Context, d *schema.ResourceData, m interfa
 
 func resourceConfigDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	client := &http.Client{Timeout: 10 * time.Second}
-	clientName := d.Id()
 
 	config, ok := m.(Ctx)
 	if !ok {
 		return diag.FromErr(fmt.Errorf("can't read config"))
 	}
+
+	client := &http.Client{Timeout: time.Duration(config.Timeout) * time.Second}
+	clientName := d.Id()
 
 	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/%s", config.BaseUrl, clientName), nil)
 	if err != nil {
