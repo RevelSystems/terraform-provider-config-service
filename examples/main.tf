@@ -8,13 +8,13 @@ terraform {
 }
 
 provider "config-service" {
-  token     = "<token_value>"
-  base_url  = "<base_url>"
+  token    = "<token_value>"
+  base_url = "<base_url>"
 }
 
 resource "configuration" "config" {
   provider = config-service
-  client = "client_name"
+  client   = "client_name"
   attributes_json = jsonencode({
     url         = "https://google.com",
     some_flag   = false,
@@ -27,13 +27,13 @@ output "attributes_json" {
   value = configuration.config.attributes_json
 }
 output "client" {
- value = configuration.config.client
+  value = configuration.config.client
 }
 
 output "created_on" {
- value = configuration.config.created_on
+  value = configuration.config.created_on
 }
 
 output "updated_on" {
- value = configuration.config.updated_on
+  value = configuration.config.updated_on
 }

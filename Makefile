@@ -1,10 +1,10 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
-HOSTNAME=revelsystems.com
-NAMESPACE=revel
+HOSTNAME=registry.terraform.io
+NAMESPACE=RevelSystems
 NAME=config-service
 BINARY=terraform-provider-${NAME}
 VERSION=0.1.0
-OS_ARCH=darwin_amd64
+OS_ARCH=darwin_$(shell uname -m)
 
 default: install
 
