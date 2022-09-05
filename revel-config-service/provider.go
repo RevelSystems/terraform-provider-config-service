@@ -7,8 +7,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-const DEFAULT_TIMEOUT int = 30
-
 type Ctx struct {
 	Token   string
 	BaseUrl string
@@ -32,6 +30,8 @@ func Provider() *schema.Provider {
 			},
 			"timeout": {
 				Type:        schema.TypeInt,
+				Optional:    true,
+				Default:     30,
 				Required:    false,
 				DefaultFunc: schema.EnvDefaultFunc("CONFIG_SERVICE_TIMEOUT", nil),
 			},
@@ -45,12 +45,7 @@ func Provider() *schema.Provider {
 func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	token := d.Get("token").(string)
 	url := d.Get("base_url").(string)
-	timeout_raw := d.Get("timeout")
-	timeout := DEFAULT_TIMEOUT
-
-	if timeout_raw != nil {
-		timeout = timeout_raw.(int)
-	}
+	timeout := d.Get("timeout").(int)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
